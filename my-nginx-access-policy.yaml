@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: access-my-nginx
+  namespace: development
+  labels:
+    run: my-nginx
+spec:
+  podSelector:
+    matchLabels:
+	   run: my-nginx
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          access: "true"
