@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-nginx-secure
+  labels:
+    run: my-nginx-secure
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+    targetPort: 80
+    protocol: TCP
+    name: http
+  - port: 443
+    protocol: TCP
+    name: https
+  selector:
+    run: my-nginx-secure
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: my-nginx-secure
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: my-nginx-secure
+    spec:
+      containers:
+      - name: my-nginx-secure
+        image: nginx
+        ports:
+        - containerPort: 443
+        - containerPort: 80
