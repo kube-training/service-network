@@ -1,0 +1,20 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: my-nginx
+  namespace: development
+  labels:
+    app: my-nginx
+spec:
+  replicas: 2
+  template:
+    metadata:
+      namespace: development
+      labels:
+        run: my-nginx
+    spec:
+      containers:
+      - name: my-nginx
+        image: nginx
+        ports:
+        - containerPort: 80
